@@ -472,18 +472,28 @@ subroutine readlinelist(linelistfile,referencelinelist,nlines,wavelength1,wavele
   endif
 
   inquire(file=linelistfile, exist=file_exists) ! see if the input file is present
+  !BSC_052418
+!  if (.not. file_exists) then ! try in default directory
+
+!    inquire(file=PREFIX//"/share/alfa/"//linelistfile, exist=file_exists)
+!    if (.not. file_exists) then
+!      print *,gettime(),"error: line catalogue not found: ",trim(linelistfile)," does not exist in current directory or in ",PREFIX,"/share/alfa"
+!      call exit(1)
+!    else
+!      linelistfile=PREFIX//"/share/alfa/"//trim(linelistfile)
+!    endif
+
+!  endif
 
   if (.not. file_exists) then ! try in default directory
 
-    inquire(file=PREFIX//"/share/alfa/"//linelistfile, exist=file_exists)
+    inquire(file="/home/bscousin/software/share/alfa/"//linelistfile, exist=file_exists)
     if (.not. file_exists) then
       print *,gettime(),"error: line catalogue not found: ",trim(linelistfile)," does not exist in current directory or in ",PREFIX,"/share/alfa"
       call exit(1)
     else
-      linelistfile=PREFIX//"/share/alfa/"//trim(linelistfile)
+      linelistfile="/home/bscousin/software/share/alfa/"//trim(linelistfile)
     endif
-
-  endif
 
   I = 0
   OPEN(199, file=linelistfile, iostat=IO, status='old')
