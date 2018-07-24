@@ -42,6 +42,7 @@ real, dimension(:), allocatable :: spectrum_1d
 real, dimension(:,:), allocatable :: spectrum_2d
 real, dimension(:,:,:), allocatable :: spectrum_3d
 real :: minimumwavelength,maximumwavelength ! limits of spectrum, to be passed to catalogue reading subroutines
+real :: minwave !BSC - the redshift-modified minimum wavelength, a CRITICAL change to make ALFA work with redshifts that aren't zero
 real :: wavelengthscaling ! default is 1.0 which is for wavelengths in A.  subroutine getfiletype checks if FITS header indicates units are nm, and sets to 10.0 if so.  todo: check for other units
 
 CHARACTER(len=2048) :: commandline
@@ -96,16 +97,23 @@ vtol2=0.0002 !second pass. 0.0002 = 60 km/s
 baddata=0.d0
 bdcount=0
 wavelengthscaling=1.d0
-detectionlimit=3.0
+detectionlimit=3.5  !BSC - changed from 3.0
 rebinfactor=1
 continuumwindow=101
 
 tablewavelengthcolumn=1
 tablefluxcolumn=2
 
-stronglinelistfile=trim(PREFIX)//"/share/alfa/optical_strong.cat"
-deeplinelistfile=trim(PREFIX)//"/share/alfa/optical_deep.cat"
-skylinelistfile=trim(PREFIX)//"/share/alfa/sky_deep.cat"
+!BSC_052418 - changing absolute paths to catalogues
+
+!stronglinelistfile=trim(PREFIX)//"/share/alfa/optical_strong.cat"
+!deeplinelistfile=trim(PREFIX)//"/share/alfa/optical_deep.cat"
+!skylinelistfile=trim(PREFIX)//"/share/alfa/sky_deep.cat"
+
+!PREFIX="/home/bscousin/software"
+stronglinelistfile="/home/bscousin/ALFA/share/alfa/optical_strong.cat"
+deeplinelistfile="/home/bscousin/ALFA/share/alfa/optical_deep.cat"
+skylinelistfile="/home/bscousin/ALFA/share/alfa/sky_deep.cat"
 
 outputdirectory="./"
 imagesection=""
@@ -215,10 +223,16 @@ endif
 
 !read in the line catalogues
 
+minwave = minimumwavelength / redshiftguess_initial !BSC 053018 - changes to accomodate higher redshifts - see above note about minwave
+
 print *,gettime(),"reading in line catalogues"
-call readlinelist(skylinelistfile, skylines_catalogue, nlines,minimumwavelength,maximumwavelength,exclusions)
-call readlinelist(stronglinelistfile, stronglines_catalogue, nlines,minimumwavelength,maximumwavelength,exclusions)
-call readlinelist(deeplinelistfile, deeplines_catalogue, nlines,minimumwavelength,maximumwavelength,exclusions)
+!BSC 053018 - changes to accomodate higher redshifts - see above note about minwave
+call readlinelist(skylinelistfile, skylines_catalogue, nlines,minwave,maximumwavelength,exclusions)
+call readlinelist(stronglinelistfile, stronglines_catalogue, nlines,minwave,maximumwavelength,exclusions)
+call readlinelist(deeplinelistfile, deeplines_catalogue, nlines,minwave,maximumwavelength,exclusions)
+!call readlinelist(skylinelistfile, skylines_catalogue, nlines,minimumwavelength,maximumwavelength,exclusions)
+!call readlinelist(stronglinelistfile, stronglines_catalogue, nlines,minimumwavelength,maximumwavelength,exclusions)
+!call readlinelist(deeplinelistfile, deeplines_catalogue, nlines,minimumwavelength,maximumwavelength,exclusions)
 
 if (allocated(spectrum_1d)) then !1d spectrum
 
