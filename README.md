@@ -1,4 +1,4 @@
-ALFABSC
+ALFA
 ====
 
 Automatic line fitting algorithm.
