@@ -104,16 +104,9 @@ continuumwindow=101
 tablewavelengthcolumn=1
 tablefluxcolumn=2
 
-!BSC_052418 - changing absolute paths to catalogues
-
-!stronglinelistfile=trim(PREFIX)//"/share/alfa/optical_strong.cat"
-!deeplinelistfile=trim(PREFIX)//"/share/alfa/optical_deep.cat"
-!skylinelistfile=trim(PREFIX)//"/share/alfa/sky_deep.cat"
-
-!PREFIX="/home/bscousin/software"
-stronglinelistfile="/home/bscousin/ALFA/share/alfa/optical_strong.cat"
-deeplinelistfile="/home/bscousin/ALFA/share/alfa/optical_deep.cat"
-skylinelistfile="/home/bscousin/ALFA/share/alfa/sky_deep.cat"
+stronglinelistfile=trim(PREFIX)//"/share/alfa/optical_strong.cat"
+deeplinelistfile=trim(PREFIX)//"/share/alfa/optical_deep.cat"
+skylinelistfile=trim(PREFIX)//"/share/alfa/sky_deep.cat"
 
 outputdirectory="./"
 imagesection=""
