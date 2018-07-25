@@ -27,10 +27,10 @@ LD=gfortran
 # set prefix depending on OS
 OS := $(shell uname)
 ifeq ($(OS),Darwin)
-  #PREFIX=/usr/local
-  PREFIX=~/ALFA
+  PREFIX=/usr/local
 else
-  PREFIX=/usr
+  #PREFIX=/usr
+  PREFIX=~/ALFA
 endif
 
 # get version from changelog if debian package, or git log otherwise
