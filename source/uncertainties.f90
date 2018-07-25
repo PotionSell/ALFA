@@ -57,7 +57,10 @@ subroutine get_uncertainties(fittedspectrum, realspec, fittedlines)
 ! wavelength sampling determined at location of line. this would break if a line peak is in the last pixel of the spectrum, should add something to prevent this as it would only have half the profile to fit from anyway in that case.
 
   do i=1,size(fittedlines%uncertainty)
-    uncertaintywavelengthindex=minloc(abs(realspec%wavelength-fittedlines(i)%wavelength),1)
+  !BSC 070318 - the raw, UNREDSHIFTED, lines were being used for finding the indices of the fitted lines within the spectrum.
+  !Now, I changed the code to use the REDSHIFTED lines for this process. Without this change, the lines were not fit properly.
+!    uncertaintywavelengthindex=minloc(abs(realspec%wavelength-fittedlines(i)%wavelength),1)
+    uncertaintywavelengthindex=minloc(abs(realspec%wavelength-fittedlines(i)%wavelength*fittedlines(i)%redshift),1)
     if (realspec(uncertaintywavelengthindex)%uncertainty .ne. 0.d0) then
       wavelengthsampling = realspec(uncertaintywavelengthindex+1)%wavelength - realspec(uncertaintywavelengthindex)%wavelength
       fittedlines(i)%uncertainty=0.67*(fittedlines(i)%wavelength/(fittedlines(i)%resolution*wavelengthsampling))**0.5&
