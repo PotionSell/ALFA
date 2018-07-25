@@ -27,7 +27,8 @@ LD=gfortran
 # set prefix depending on OS
 OS := $(shell uname)
 ifeq ($(OS),Darwin)
-  PREFIX=/usr/local
+  #PREFIX=/usr/local
+  PREFIX=~/ALFA
 else
   PREFIX=/usr
 endif
