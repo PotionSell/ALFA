@@ -475,13 +475,14 @@ subroutine readlinelist(linelistfile,referencelinelist,nlines,wavelength1,wavele
 
   if (.not. file_exists) then ! try in default directory
 
-    inquire(file="/home/bscousin/AFLA/share/alfa/"//linelistfile, exist=file_exists)
+    inquire(file=PREFIX//"/share/alfa/"//linelistfile, exist=file_exists)
     if (.not. file_exists) then
       print *,gettime(),"error: line catalogue not found: ",trim(linelistfile)," does not exist in current directory or in ",PREFIX,"/share/alfa"
       call exit(1)
     else
-      linelistfile="/home/bscousin/ALFA/share/alfa/"//trim(linelistfile)
+      linelistfile=PREFIX//"/share/alfa/"//trim(linelistfile)
     endif
+
   endif
   
   I = 0
