@@ -35,7 +35,7 @@ logical :: subtractcontinuum
       spectrumchunk = realspec(i-halfwindow:i+halfwindow)%flux
       call qsort(spectrumchunk)
 !      continuum(i)%flux = spectrumchunk(halfwindow/2)
-      continuum(i)%flux = spectrumchunk(halfwindow/2)   !50% BSC
+      continuum(i)%flux = spectrumchunk(halfwindow)   !50% BSC
     enddo
 
 !fill in the ends
