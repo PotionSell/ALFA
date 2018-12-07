@@ -30,8 +30,8 @@ ifeq ($(OS),Darwin)
   PREFIX=/usr/local
 else
   #PREFIX=/usr
-  #PREFIX=~/ALFA
-  PREFIX=/usr/local
+  PREFIX=~/github/ALFA
+  #PREFIX=/usr/local
 endif
 
 # get version from changelog if debian package, or git log otherwise
